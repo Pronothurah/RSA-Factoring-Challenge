@@ -1,0 +1,53 @@
+#!/usr/bin/python3
+
+#!/usr/bin/python3
+
+import sys
+import time
+from sympy import isprime
+
+def factorize_rsa_number(n):
+    """
+    Takes an RSA number as input.
+    Args:
+        n: RSA number
+    Return:
+        Tuple with prime factors (p, q)
+    """
+    if not isprime(n):
+        print(f"Input number is not prime: {n}")
+        return None
+    return n, n
+
+def process_file(input_file):
+    try:
+        with open(input_file, 'r') as f:
+            return f.readlines()
+    except FileNotFoundError:
+        print("File not found")
+        return []
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: rsa <file>")
+        sys.exit(1)
+
+    input_file = sys.argv[1]
+    lines = process_file(input_file)
+    
+    if not lines:
+        sys.exit(1)
+
+    for line in lines:
+        try:
+            n = int(line.strip())
+            factors = factorize_rsa_number(n)
+
+            if factors:
+                p, q = factors
+                print(f"{n}={p}*{q}")
+        except ValueError:
+            print("Invalid number on input file")
+
+if __name__ == '__main__':
+    main()
